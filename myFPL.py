@@ -11,6 +11,7 @@ Outputs:
 - PNG visualizations of rank progression
 """
 
+import sys
 import requests
 import pandas as pd
 import numpy as np
@@ -29,12 +30,12 @@ from openpyxl.utils import get_column_letter
 # DATA FETCHING & PROCESSING
 # --------------------------
 
-def fetch_fpl_data(team_id=<your_team_id>):
+def fetch_fpl_data(team_id):
     """
     Retrieve FPL data from the official API.
     
     Args:
-        team_id (int): FPL team identifier (default: <your_team_id>)
+        team_id (int): FPL team identifier
     
     Returns:
         dict: Dictionary containing:
@@ -586,8 +587,22 @@ def plot_season_ranks(df, save_path="season_rank_progression.png"):
 
 def main():
     """Main execution flow for the FPL analysis tool."""
+    
+    print("\n🎮 FPL Advanced Analysis Tool")
+    print("=============================\n")
+    
     try:
-        team_id = <your_team_id>  # TODO: Make configurable via CLI arguments
+        team_id = sys.argv
+        if not team_id[1].isdigit():
+            sys.exit("❌ Error: Team ID must be a numeric value.\n")
+        
+        if len(sys.argv) < 2:
+            sys.exit(
+                "Invalid usage.\n"
+                "Please provide exactly one argument - your team ID.\n"
+                "Example: python myFPL.py 12345\n"
+            ) 
+        
         print("⚽ Fetching FPL data...")
         data = fetch_fpl_data(team_id)
         
@@ -610,6 +625,4 @@ def main():
         print(f"\n❌ Error: {str(e)}")
 
 if __name__ == "__main__":
-    print("🎮 FPL Advanced Analysis Tool")
-    print("=============================\n")
     main()
