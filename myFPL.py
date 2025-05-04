@@ -29,12 +29,12 @@ from openpyxl.utils import get_column_letter
 # DATA FETCHING & PROCESSING
 # --------------------------
 
-def fetch_fpl_data(team_id=300152):
+def fetch_fpl_data(team_id=<your_team_id>):
     """
     Retrieve FPL data from the official API.
     
     Args:
-        team_id (int): FPL team identifier (default: 300152)
+        team_id (int): FPL team identifier (default: <your_team_id>)
     
     Returns:
         dict: Dictionary containing:
@@ -587,7 +587,7 @@ def plot_season_ranks(df, save_path="season_rank_progression.png"):
 def main():
     """Main execution flow for the FPL analysis tool."""
     try:
-        team_id = 300152  # TODO: Make configurable via CLI arguments
+        team_id = <your_team_id>  # TODO: Make configurable via CLI arguments
         print("⚽ Fetching FPL data...")
         data = fetch_fpl_data(team_id)
         
