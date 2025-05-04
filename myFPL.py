@@ -262,6 +262,30 @@ def style_gw_sheet(worksheet, df):
             highlight_fill = PatternFill(start_color="C6EFCE", fill_type="solid")
             for col in range(1, len(df.columns)+1):
                 worksheet.cell(row=max_points_row, column=col).fill = highlight_fill
+                
+      # Add totals row for Transfers, Transfers Cost, and Points on Bench
+    if not df.empty:
+        totals_row = len(df) + 2
+        
+        # Write "Totals" label
+        worksheet.cell(row=totals_row, column=1, value="Totals").font = Font(bold=True)
+        
+        # Calculate and write totals for each relevant column
+        total_columns = ['Transfers', 'Transfers Cost', 'Points on Bench']
+        for col_idx, col_name in enumerate(df.columns, 1):
+            if col_name in total_columns:
+                total = df[col_name].sum()
+                worksheet.cell(row=totals_row, column=col_idx, value=total)
+                worksheet.cell(row=totals_row, column=col_idx).font = Font(bold=True)
+                
+                # Apply number formatting
+                if col_name in number_formats:
+                    worksheet.cell(row=totals_row, column=col_idx).number_format = number_formats[col_name]
+        
+        # Style the totals row
+        totals_fill = PatternFill(start_color="D9E1F2", fill_type="solid")
+        for col in range(1, len(df.columns)+1):
+            worksheet.cell(row=totals_row, column=col).fill = totals_fill
 
 def style_leagues_table(worksheet, start_row, df):
     """
