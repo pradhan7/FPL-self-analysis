@@ -1,2 +1,2 @@
 # FPL-self-analysis
-Analyze your fpl rankings...
+Analyze your fpl rankings
